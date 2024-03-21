@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PictureController;  //外部にあるPictureControllerクラスをインポート。
+use App\Http\Controllers\ThemeController;  //外部にあるThemeControllerクラスをインポート。
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+    //return view('welcome');
+//});
+Route::get('/', [PictureController::class, 'index']);
+Route::get('/pictures', [PictureController::class, 'index']);
