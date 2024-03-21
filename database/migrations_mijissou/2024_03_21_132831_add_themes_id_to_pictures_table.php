@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('pictures', function (Blueprint $table) {
+            $table->foreignId('theme_id')->constrained()->onDelete('cascade');   
+        //'theme_id' は 'themesテーブル' の 'id' を参照する外部キーです
         });
     }
 
@@ -26,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('pictures', function (Blueprint $table) {
+            //
+        });
     }
 };
