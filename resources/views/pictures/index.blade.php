@@ -11,13 +11,16 @@
         <div class='pictures'>
             @foreach ($pictures as $picture)
                 <div class='picture'>
-                    <h2 class='title'>{{ $picture->title }}</h2>
                     <p class='image'>{{ $picture->image }}</p>
+                    <h2 class='title'>
+                        <a href = "/pictures/{{ $picture -> id }}">{{ $picture->title }}</a>
+                    </h2>
                 </div>
             @endforeach
         </div>
         <div class='paginate'>
             {{ $pictures->links() }}
         </div>
+        <a href='/themes/create'>ワンドロする！</a>
     </body>
 </html>

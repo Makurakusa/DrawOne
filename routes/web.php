@@ -20,3 +20,8 @@ use App\Http\Controllers\ThemeController;  //外部にあるThemeControllerク�
 //});
 Route::get('/', [PictureController::class, 'index']);
 Route::get('/pictures', [PictureController::class, 'index']);
+Route::get('/themes/create', [ThemeController::class, 'create']);
+Route::get('/pictures/{picture}', [PictureController::class ,'show']);
+Route::post('/themes', [ThemeController::class, 'store']);
+Route::post('/pictures', [PictureController::class, 'store']);
+// '/pictures/{対象データのID}'にGetリクエストが来たら、PictureControllerのshowメソッドを実行する
