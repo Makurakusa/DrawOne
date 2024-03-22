@@ -13,4 +13,14 @@ class ThemeController extends Controller
     {
         return $theme->get();//$themeの中身を戻り値にする。
     }
+    public function create()
+    {
+        return view('themes.create');
+    }
+    public function store(Request $request, Theme $theme)
+    {
+        $input = $request['theme'];
+        $theme->fill($input)->save();
+        return view('pictures.create');
+    }
 }
