@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 //use宣言は外部にあるクラスをPicturesController内にインポートできる。
 //この場合、App\Models内のPicturesクラスをインポートしている。
-use Illuminate\Http\Request;
+use App\Http\Requests\ThemeRequest;
 use App\Models\Theme;
+use App\Models\Picture;
 
 class ThemeController extends Controller
 {
@@ -17,10 +18,10 @@ class ThemeController extends Controller
     {
         return view('themes.create');
     }
-    public function store(Request $request, Theme $theme)
+    public function store(ThemeRequest $request, Theme $theme)
     {
         $input = $request['theme'];
         $theme->fill($input)->save();
-        return view('pictures.create');
+        return redirect()->route('pictures.create');
     }
 }

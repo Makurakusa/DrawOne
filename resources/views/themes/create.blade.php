@@ -10,6 +10,7 @@
             @csrf
             <div class = "theme">
                 <input type="text" name="theme[title]" placeholder="お題を入力してください"/>
+                <p class="title__error" style="color:red">{{ $errors->first('theme.title') }}</p>
             </div>
             <input type="submit" value="保存"/>
         </form>
