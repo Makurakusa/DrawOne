@@ -15,6 +15,11 @@
                     <h2 class='title'>
                         <a href = "/pictures/{{ $picture -> id }}">{{ $picture->title }}</a>
                     </h2>
+                    <form action="/pictures/{{ $picture->id }}" id="form_{{ $picture->id }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="deletePicture({{ $picture->id }})">削除</button> 
+                    </form>
                 </div>
             @endforeach
         </div>
@@ -22,5 +27,15 @@
             {{ $pictures->links() }}
         </div>
         <a href='/themes/create'>ワンドロする！</a>
+        <script>
+        function deletePicture(id) {
+                'use strict'
+
+                if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                    document.getElementById(`form_${id}`).submit();
+                }
+            }
+        </script>
+        `form_${id}`
     </body>
 </html>

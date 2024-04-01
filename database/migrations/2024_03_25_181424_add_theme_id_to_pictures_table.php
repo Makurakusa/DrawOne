@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pictures', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 100);
-            $table->string('path', 100);
-            //$table->time('drawing_time');
-            $table->timestamps();
-            $table->softDeletes();
+        Schema::table('pictures', function (Blueprint $table) {
+            $table->foreignId('theme_id')->constrained();
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pictures');
+        Schema::table('pictures', function (Blueprint $table) {
+            //
+        });
     }
 };

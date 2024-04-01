@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 //use宣言は外部にあるクラスをPicturesController内にインポートできる。
 //この場合、App\Models内のPicturesクラスをインポートしている。
+use App\Http\Requests\PictureRequest;
 use Illuminate\Http\Request;
 use App\Models\Picture;
+use App\Models\Theme;
+
 
 class PictureController extends Controller
 {
@@ -26,15 +29,44 @@ class PictureController extends Controller
         //'picture'はbladeファイルで使う変数。中身は$pictureはid=1のPictureインスタンス。
     }
     
-    public function create()
+    public function create(Theme $theme)
     {
-        return view('pictures.create');
+        return view('pictures.create') -> with(['themes' => $theme->get()]);
     }
     
-    public function store(Request $request, Picture $picture)
+    public function edit(Picture $picture)
     {
-        $input = $request['picture'];
-        $picture->fill($input)->save();
+        return view('pictures.edit')->with(['picture' => $picture]);
+    }
+    
+    public function update(PictureRequest $request, Picture $picture)
+    {
+        $input_picture = $request['picture'];
+        $picture->fill($input_picture)->save();
+
         return redirect('/pictures/' . $picture->id);
+    }
+    
+    public function store(Picture $picture, PictureRequest $request)
+    {
+        $dir = 'storage';
+        $file = $request -> file('picture.image');
+        $file_name = $file -> getClientOriginalName();
+        //getClientOriginalNameでオリジナルの名前が取れる。
+        $request->file('picture.image')->storeAs('public/'.$dir, $file_name); 
+        //storeAsメソッドを追加して引数に上で取得したオリジナル名を入れる。
+        $picture = new Picture();
+        $picture -> title = $request['picture.title'];
+        $picture -> theme_id = $request['picture.theme_id'];
+        $picture -> path = 'storage/' . $dir . '/' . $file_name;
+        $picture->save();
+        //return redirect('/pictures/' . $picture->id);
+        return redirect()->route('index');
+    }
+    
+    public function delete(Picture $picture)
+    {
+        $picture->delete();
+        return redirect('/');
     }
 }

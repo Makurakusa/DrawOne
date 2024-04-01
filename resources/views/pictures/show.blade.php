@@ -18,6 +18,7 @@
             <h2>お題</h2>
             <p class = "tag">タグ</p>
         </div>
+        <div class="edit"><a href="/pictures/{{ $picture->id }}/edit">タイトル編集</a></div>
         <div class = "footer">
             <a href = "/">戻る</a>
         </div>

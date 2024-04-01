@@ -11,4 +11,8 @@ class Theme extends Model
     protected $fillable = [
     'title',
     ];
+    public function pictures()   
+    {
+        return $this->hasMany(Picture::class);  
+    }
 }
