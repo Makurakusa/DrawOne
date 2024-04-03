@@ -7,18 +7,12 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
-    <body>
-        <div class ="image">
-            <img src="{{ asset($picture->path) }}"
+    <body onLoad=setTimeout("location.href='/pictures/create?id={{$theme->id}}'",2000)>
+         <h1>DrawOne!</h1>
+        <div class="theme">
+            <h2>あなたのお題は{{ $theme -> title }}です！</h2>
         </div>
-        <h1 class = "title">
-            {{ $picture -> title }}
-        </h1>
-        <div class = "content">
-            <h2>お題</h2>
-            <p class = "tag">タグ</p>
-        </div>
-        <div class="edit"><a href="/pictures/{{ $picture->id }}/edit">タイトル編集</a></div>
+        <a href="/pictures/create?id={{$theme->id}}">描く</a>
         <div class = "footer">
             <a href = "/">戻る</a>
         </div>

@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ThemeRequest;
 use App\Models\Theme;
 use App\Models\Picture;
+use App\Http\Controllers\PictureController;
 
 class ThemeController extends Controller
 {
@@ -14,14 +15,23 @@ class ThemeController extends Controller
     {
         return $theme->get();//$themeの中身を戻り値にする。
     }
+    
+    public function show(Theme $theme)
+    {
+        return view('themes.show')->with(['theme' => $theme]);
+        //'picture'はbladeファイルで使う変数。中身は$pictureはid=1のPictureインスタンス。
+    }
+    
     public function create()
     {
         return view('themes.create');
     }
     public function store(ThemeRequest $request, Theme $theme)
     {
-        $input = $request['theme'];
-        $theme->fill($input)->save();
-        return redirect()->route('pictures.create');
+        $theme = new theme();
+        $theme -> title = $request['theme.title'];
+        $theme -> save();
+        $id=$theme->id;
+        return redirect('/themes/' . $id);
     }
 }

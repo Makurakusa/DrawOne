@@ -29,9 +29,10 @@ class PictureController extends Controller
         //'picture'はbladeファイルで使う変数。中身は$pictureはid=1のPictureインスタンス。
     }
     
-    public function create(Theme $theme)
+    public function create(Request $request, Theme $theme)
     {
-        return view('pictures.create') -> with(['themes' => $theme->get()]);
+        $id=$request->id;
+        return view('pictures.create') -> with(['theme' => $theme ->where('id', $id)->first()]);
     }
     
     public function edit(Picture $picture)
@@ -51,7 +52,7 @@ class PictureController extends Controller
     {
         $dir = 'storage';
         $file = $request -> file('picture.image');
-        $file_name = $file -> getClientOriginalName();
+        $file_name = $file -> hashName();
         //getClientOriginalNameでオリジナルの名前が取れる。
         $request->file('picture.image')->storeAs('public/'.$dir, $file_name); 
         //storeAsメソッドを追加して引数に上で取得したオリジナル名を入れる。
@@ -60,8 +61,7 @@ class PictureController extends Controller
         $picture -> theme_id = $request['picture.theme_id'];
         $picture -> path = 'storage/' . $dir . '/' . $file_name;
         $picture->save();
-        //return redirect('/pictures/' . $picture->id);
-        return redirect()->route('index');
+        return redirect('/pictures/' . $picture->id);
     }
     
     public function delete(Picture $picture)

@@ -91,3 +91,8 @@ process.stdin.setEncoding('utf8');
 window.onbeforeunload = function () {
   return "リロード禁止です！";
 };
+
+const theme = @json($theme);
+            const themetime = new Date(theme.created_at);
+            console.log(themetime.toLocaleString());
+            console.log(theme);

@@ -24,6 +24,7 @@ Route::get('/pictures/create', [PictureController::class, 'create'])->name('pict
 Route::get('/themes/create', [ThemeController::class, 'create']);
 Route::get('/pictures/{picture}/edit', [PictureController::class, 'edit']);
 Route::get('/pictures/{picture}', [PictureController::class ,'show']);
+Route::get('/themes/{theme}', [ThemeController::class ,'show']);
 Route::put('/pictures/{picture}', [PictureController::class, 'update']);
 Route::post('/themes', [ThemeController::class, 'store']);
 Route::post('/pictures', [PictureController::class, 'store']);
