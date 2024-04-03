@@ -11,7 +11,7 @@
         <div class='pictures'>
             @foreach ($pictures as $picture)
                 <div class='picture'>
-                    <p class='image'>{{ $picture->image }}</p>
+                    <a href = "/pictures/{{ $picture -> id }}"><img src="{{ asset($picture->path) }}"</a>
                     <h2 class='title'>
                         <a href = "/pictures/{{ $picture -> id }}">{{ $picture->title }}</a>
                     </h2>
