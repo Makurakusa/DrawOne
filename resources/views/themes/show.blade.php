@@ -10,7 +10,7 @@
     <body onLoad=setTimeout("location.href='/pictures/create?id={{$theme->id}}'",2000)>
          <h1>DrawOne!</h1>
         <div class="theme">
-            <h2>あなたのお題は{{ $theme -> title }}です！</h2>
+            <h2>あなたのお題は「{{ $theme -> title }}」です！</h2>
         </div>
         <a href="/pictures/create?id={{$theme->id}}">描く</a>
         <div class = "footer">
