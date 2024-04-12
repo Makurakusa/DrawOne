@@ -9,7 +9,7 @@
         <h1>DrawOne!</h1>
         <div id="timer">00:00:00</div>
         <div class="theme">
-                <h2>あなたのお題は{{ $theme -> title }}です！</h2>
+                <h2>あなたのお題は「{{ $theme -> title }}」です！</h2>
         </div>
         <form action="/pictures" method="POST" enctype="multipart/form-data">
             @csrf
@@ -108,7 +108,7 @@
                 
                         if (isRunning === false) {
                             isRunning = true;
-                            timeToCountDown += 60* 20 * 1000;
+                            timeToCountDown += 60 * 1000;
                             updateTimer(timeToCountDown);
                             startTime = themetime;
                 

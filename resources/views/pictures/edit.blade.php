@@ -11,10 +11,6 @@
             <form action="/pictures/{{ $picture->id }}" method="POST">
                 @csrf
                 @method('PUT')
-                <div class ="content_image">
-                    <input type='text' name='picture[image]' value="{{ $picture->image }}">
-                    <p class="title__error" style="color:red">{{ $errors->first('picture.image') }}</p>
-                </div>
                 <div class = "content_title">
                     <h2>タイトル</h2>
                     <input type="text" name="picture[title]" value="{{ $picture->title }}"　placeholder="タイトルを入力してください"/>

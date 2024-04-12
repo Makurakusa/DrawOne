@@ -1,32 +1,49 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PictureController;  //外部にあるPictureControllerクラスをインポート。
-use App\Http\Controllers\ThemeController;  //外部にあるThemeControllerクラスをインポート。
-
+use App\Http\Controllers\PictureController;
+use App\Http\Controllers\ThemeController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-//Route::get('/', function () {
-    //return view('welcome');
-//});
-Route::get('/', [PictureController::class, 'index'])->name('index');
-Route::get('/pictures', [PictureController::class, 'index']);
-Route::get('/pictures/create', [PictureController::class, 'create'])->name('pictures.create');
-Route::get('/themes/create', [ThemeController::class, 'create']);
-Route::get('/pictures/{picture}/edit', [PictureController::class, 'edit']);
-Route::get('/pictures/{picture}', [PictureController::class ,'show']);
-Route::get('/themes/{theme}', [ThemeController::class ,'show']);
-Route::put('/pictures/{picture}', [PictureController::class, 'update']);
-Route::post('/themes', [ThemeController::class, 'store']);
-Route::post('/pictures', [PictureController::class, 'store']);
-Route::delete('/pictures/{picture}', [PictureController::class,'delete']);
-// '/pictures/{対象データのID}'にGetリクエストが来たら、PictureControllerのshowメソッドを実行する
+Route::controller(PictureController::class)->middleware(['auth'])->group(function(){
+    Route::get('/', 'index')->name('index');
+    Route::post('/pictures', 'store')->name('pictures.store');
+    Route::get('/pictures/create', 'create')->name('pictures.create');
+    Route::get('/pictures/search', 'search')->name('pictures.search');
+    Route::get('/pictures/like', 'like')->name('pictures.like');
+    Route::get('/pictures/unlike', 'unlike')->name('pictures.unlike');
+    Route::get('/pictures/{picture}', 'show')->name('pictures.show');
+    Route::put('/pictures/{picture}', 'update')->name('pictures.update');
+    Route::delete('/pictures/{picture}', 'delete')->name('pictures.delete');
+    Route::get('/pictures/{picture}/edit', 'edit')->name('pictures.edit');
+});
+
+Route::controller(ThemeController::class)->middleware(['auth'])->group(function(){
+    Route::post('/themes', 'store')->name('store');
+    Route::get('/themes/create', 'create')->name('create');
+    Route::get('/themes/{theme}', 'show')->name('show');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+Route::get('/users/{user}', [UserController::class,'index'])->name('user.index');
+
+require __DIR__.'/auth.php';
