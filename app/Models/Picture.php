@@ -13,9 +13,21 @@ class Picture extends Model
     use HasFactory;
     public function getPaginateByLimit(int $limit_count = 2)
     {
-        // updated_atで降順に並べたあと、limitで件数制限をかける
+        // created_atで降順に並べたあと、limitで件数制限をかける
         return $this::with('theme')->orderBy('created_at', 'DESC')->paginate($limit_count);
     }
+    
+    public function getOrderByLikes(int $limit_count = 2)
+    {
+        return $this::withCount('likes')->orderBy('likes_count', 'DESC')->paginate($limit_count);
+    }
+    
+    // public function getComments(int $limit_count = 10)
+    //   {
+    //     // created_atで降順に並べたあと、limitで件数制限をかける
+    //     return $this->comments()->with('comment')->orderBy('created_at', 'DESC')->paginate($limit_count);
+    //   }
+    
     protected $fillable = [
         'title',
         'path',
@@ -34,6 +46,11 @@ class Picture extends Model
     public function likes()
     {
         return $this->hasMany(Like::class,'picture_id');
+    }
+    
+    public function comments()
+    {
+        return $this->hasMany(Comment::class,'picture_id');
     }
     
     /**
