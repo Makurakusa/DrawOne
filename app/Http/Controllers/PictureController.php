@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Picture;
 use App\Models\Theme;
 use App\Models\Like;
+use App\Models\Comment;
 use App\Models\User;
 
 
@@ -34,7 +35,7 @@ class PictureController extends Controller
     * @params Object Post // 引数の$postはid=1のPostインスタンス
     * @return Reposnse post view
     */
-    public function show(Picture $picture)
+    public function show(Picture $picture, Comment $comment)
     {
         return view('pictures.show')->with(['picture' => $picture]);
         //'picture'はbladeファイルで使う変数。中身は$pictureはid=1のPictureインスタンス。
@@ -79,6 +80,7 @@ class PictureController extends Controller
     
     public function delete(Picture $picture)
     {
+        $picture->comments()->delete();
         $picture->delete();
         return redirect('/');
     }

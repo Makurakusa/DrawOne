@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +37,13 @@ Route::controller(ThemeController::class)->middleware(['auth'])->group(function(
     Route::post('/themes', 'store')->name('store');
     Route::get('/themes/create', 'create')->name('create');
     Route::get('/themes/{theme}', 'show')->name('show');
+});
+
+Route::controller(CommentController::class)->middleware(['auth'])->group(function(){
+    Route::post('/pictures/{picture}/{comment}', 'storeReply')->name('replies.store');
+    Route::post('/pictures/{picture}', 'store')->name('comments.store');
+    Route::delete('/pictures/{picture}/{comment}/{reply}', 'delete')->name('replies.delete');
+    Route::delete('/pictures/{picture}/{comment}', 'destroy')->name('comments.delete');
 });
 
 Route::middleware('auth')->group(function () {
