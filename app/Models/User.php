@@ -47,7 +47,7 @@ class User extends Authenticatable
         return $this->hasMany(Picture::class);  
     }
     
-    public function getByUser(int $limit_count = 2)
+    public function getByUser(int $limit_count = 20)
     {
         return $this -> pictures() -> with('user') -> orderBy('created_at','DESC') -> paginate($limit_count);
     }

@@ -1,0 +1,305 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1:wght@100..900&family=Murecho:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap');
+/*全体フォント*/
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background-color:#F2F0F2;
+}
+
+h2 {
+    font-family: "Murecho", sans-serif;
+    margin-bottom:20px;
+}
+
+p {
+    margin-bottom:10px;
+}
+
+a {
+    color:#0070CC;
+    text-decoration: none;
+}
+a:hover {
+    color:#66AAFF;
+}
+
+input, select, button, textarea {
+            font-family: inherit;
+        }
+
+/*大きいレイアウト*/
+.header{
+    padding:20px;
+    background-color:#FFFFFF;
+}
+.middle{
+    margin:20px 60px;
+    padding:20px;
+    background-color:#FFFFFF;
+}
+.footer{
+    margin:20px 60px;
+}
+
+.headbox{
+    display: flex;
+    justify-content: space-between;
+}
+
+/*画像リスト表示*/
+.pictures{
+    display: flex; 
+    height:auto;
+}
+
+.box-parent {
+  width:100%;height:auto;
+  display:flex;
+  flex-wrap:wrap;/* これを指定する */
+  justify-content:flex-start;
+}
+
+.picture{
+    margin-right : 10px ;
+}
+
+/*ペジネーション*/
+.paginate{
+    display: flex;
+}
+
+/* ページ送りを中央寄せ */
+.pagination {
+    font-size:20px;
+    text-align: center;
+}
+
+/* ページ送りを横並びに */
+.pagination li{
+    display: inline-block;
+}
+
+/*検索ボックス*/
+.btn{
+    color: #FF0066;
+}
+
+.search-form-5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px; /* 任意の幅に調整してください */
+    overflow: hidden;
+    border-radius: 25px;
+    background-color: #f2f2f2;
+}
+
+.search-form-5 input {
+    height: 45px;
+    padding: 5px 15px;
+    border: none;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    font-size: 1em;
+    outline: none;
+}
+
+.search-form-5 input::placeholder {
+    color: #777777;
+}
+
+.search-form-5 button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 45px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.search-form-5 button::after {
+    width: 20px;
+    height: 20px;
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%20%3Cpath%20d%3D%22M23.7%2020.8%2019%2016.1c-.2-.2-.5-.3-.8-.3h-.8c1.3-1.7%202-3.7%202-6C19.5%204.4%2015.1%200%209.7%200S0%204.4%200%209.7s4.4%209.7%209.7%209.7c2.3%200%204.3-.8%206-2v.8c0%20.3.1.6.3.8l4.7%204.7c.4.4%201.2.4%201.6%200l1.3-1.3c.5-.5.5-1.2.1-1.6zm-14-5.1c-3.3%200-6-2.7-6-6s2.7-6%206-6%206%202.7%206%206-2.6%206-6%206z%22%20fill%3D%22%23777777%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    content: '';
+}
+
+/*ワンドロボタン*/
+.btn--draw {
+    width: 200px;
+    font-family: "Murecho", sans-serif;
+    font-size:24px;
+    color: #ffffff;
+    background-color: #FF4637;
+    text-align: center;
+    border-radius: 100vh;
+    margin-bottom:10px;
+}
+.btn--draw:hover {
+    background-color: #FF6955;
+}
+.btn--draw--text{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.btn--draw--text:hover{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/*フォーマット*/
+.button{
+    height: 24px;
+    width: 100px;
+    font-family: "Murecho", sans-serif;
+    font-size:12px;
+    color: #ffffff;
+    background-color: #66AAFF;
+    text-align: center;
+    border: none;
+    border-radius: 50vh;
+    margin-bottom:10px;
+}
+.button:hover{
+    color: #FFFFFF;
+    background-color: #88CCFF;
+}
+.button:active{
+    height: 26px;
+    width: 110px;
+    font-size:13px;
+}
+
+.button-delete{
+    height: 24px;
+    width: 100px;
+    font-family: "Murecho", sans-serif;
+    font-size:12px;
+    color: #ffffff;
+    background-color: #FF2222;
+    text-align: center;
+    border: none;
+    border-radius: 50vh;
+    margin-bottom:10px;
+}
+.button-delete:hover{
+    color: #FFFFFF;
+    background-color: #FF8888;
+}
+.button-delete:active{
+    height: 26px;
+    width: 110px;
+    font-size:13px;
+}
+
+.form{
+    width:400px;
+}
+
+.input {
+    width:400px;
+    height: 45px;
+    padding: 5px 15px;
+    border: none;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    font-size: 1em;
+    outline: none;
+    margin-bottom:10px;
+}
+.input::placeholder {
+    color: #777777;
+}
+
+.input-comment {
+    width:60%;
+    height: 80px;
+    padding: 5px 15px;
+    border: none;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    font-size: 1em;
+    outline: none;
+}
+.input::placeholder {
+    color: #777777;
+}
+/*ドラッグアンドドロップ*/
+#drag-drop-area{
+  background-color: #f4f4f4;
+  margin: 10px;
+  padding: 10px;
+  border: #ddd dashed 5px;
+  min-height: 200px;
+  text-align: center;
+}
+
+#drag-drop-area p{
+    color: #999;
+    font-size: 14px;
+    font-size: 1.4em;
+}
+#drag-drop-area .drag-drop-buttons{
+    margin-top: 20px;
+    font-size: 12px;
+    font-size: 1.2em;
+}
+#drag-drop-area .button{
+    background-color: #888888;
+}
+#drag-drop-area .button:hover{
+    background-color: #AAAAAA;
+}
+#previewImage{
+    max-width:600px;
+    max-height:600px;
+}
+.drag-drop-buttons input{
+    margin: auto;
+}
+
+/*戻るボタン*/
+.button-back {
+    height: 24px;
+    width: 40px;
+    font-family: "Murecho", sans-serif;
+    font-size:12px;
+    color: #ffffff;
+    background-color: #AAAAAA;
+    text-align: center;
+    border-radius: 50vh;
+}
+.button-back:hover {
+    background-color: #CCCCCC;
+}
+.back{
+    color: #ffffff;
+    text-decoration: none;
+}
+.back:hover{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/*show.blade.php*/
+.image img{
+    width: 100%;
+}
+
+.time {
+    font-size:40px;
+    text-align: center;
+    font-family: "Murecho", sans-serif;
+    margin:20px 60px;
+    padding:20px;
+    background-color:#FFFFFF;
+}

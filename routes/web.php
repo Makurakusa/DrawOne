@@ -23,13 +23,16 @@ Route::get('/dashboard', function () {
 Route::controller(PictureController::class)->middleware(['auth'])->group(function(){
     Route::get('/', 'index')->name('index');
     Route::post('/pictures', 'store')->name('pictures.store');
+    Route::post('/pictures/extend', 'storeExtend')->name('pictures.extend.store');
     Route::get('/pictures/create', 'create')->name('pictures.create');
     Route::get('/pictures/search', 'search')->name('pictures.search');
+    Route::get('/pictures/extend', 'extend')->name('pictures.extend');
     Route::get('/pictures/like', 'like')->name('pictures.like');
     Route::get('/pictures/unlike', 'unlike')->name('pictures.unlike');
     Route::get('/pictures/{picture}', 'show')->name('pictures.show');
     Route::put('/pictures/{picture}', 'update')->name('pictures.update');
     Route::delete('/pictures/{picture}', 'delete')->name('pictures.delete');
+    Route::get('/pictures/{picture}/original', 'original')->name('pictures.original');
     Route::get('/pictures/{picture}/edit', 'edit')->name('pictures.edit');
 });
 

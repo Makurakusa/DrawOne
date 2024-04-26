@@ -3,32 +3,51 @@
     <head>
         <meta charset="utf-8">
         <title>DrawOne</title>
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1:wght@100..900&family=Murecho:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
         <script src="https://kit.fontawesome.com/0dff1c35da.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="/css/drawone.css" >
     </head>
     <body>
-        <h1>DrawOne!</h1>
-        <div id="timer">00:00:00</div>
-        <div class="theme">
-                <h2>あなたのお題は「{{ $theme -> title }}」です！</h2>
+        <div class="header">
+            <a href = "/" class = "drawone"><img src = "{{ asset('drawone_logo.png') }}" alt = "" ></a>
         </div>
-        <form action="/pictures" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class = "theme_id">
-                <input type= "hidden" name="picture[theme_id]" value = "{{ $theme->id }}">
+        <div class="time">
+            <div id="timer">00:00:00</div>
+        </div>
+        <div class="middle">
+            <div class="theme">
+                <h2>あなたのお題は「{{ $theme -> title }}」です！</h2>
             </div>
-            <div class="upload-area">
-                <i class="fa-solid fa-cloud"></i>
-                <p>Drag and drop a file or click</p>
-                <input type="file" name="picture[image]" id="images">
-            </div>
-            <div class = "title">
-                <input type="text" name="picture[title]" placeholder="タイトルを入力してください"/>
-                <p class="title__error" style="color:red">{{ $errors->first('picture.title') }}</p>
-            </div>
-            <input type="submit" value="保存"/>
-        </form>
+            <form action="/pictures" method="POST" class="form-picture" enctype="multipart/form-data">
+                @csrf
+                <div class = "theme_id">
+                    <input type= "hidden" name="picture[theme_id]" value = "{{ $theme->id }}">
+                </div>
+                <div id="drag-drop-area">
+                    <div class="upload-area">
+                        <p class="drag-drop-info">ここにファイルをドロップ</p>
+                        <p>または</p>
+                        <p class="drag-drop-buttons">
+                            <input type="file" accept="image/*" name="picture[image]" id="images" onChange="photoPreview(event)">
+                        </p>
+                        <div id="preview-area"></div>
+                    </div>
+                </div>
+                <div class = "title">
+                    <input type="text" name="picture[title]" class="input" placeholder="タイトルを入力してください"/>
+                    <p class="title__error" style="color:red">{{ $errors->first('picture.title') }}</p>
+                </div>
+                <button type="submit" class="button">保存</button>
+            </form>
+        </div>
         <div class = "footer">
-            <a href = "/">戻る</a>
+            <div class ="button-back">
+                <a href = "/" class="back">戻る</a>
+            </div>
         </div>
         <script>
              //即時関数
@@ -91,7 +110,7 @@
                 
                                 updateTimer(timeLeft);
                                 
-                                window.location.href = '/';
+                                window.location.href = '/pictures/extend?id={{$theme->id}}';
                 
                                 return;
                             }
@@ -108,7 +127,8 @@
                 
                         if (isRunning === false) {
                             isRunning = true;
-                            timeToCountDown += 60 * 1000;
+                            timeToCountDown += 10 * 1000;
+                            timeToCountDown += 60 * 60 * 1000;
                             updateTimer(timeToCountDown);
                             startTime = themetime;
                 
@@ -117,6 +137,71 @@
                         } 
                     };
                 })();
+        </script>
+        <script>
+            document.addEventListener('dragover',function(e){
+                  e.preventDefault();
+                });
+                document.addEventListener('drop',function(e){
+                  e.preventDefault();
+                });
+                
+                var target = document.getElementById('preview-area');
+                
+                target.addEventListener('drop', function (e) {
+                  document.querySelector("[name='picture[image]']").files =     
+                  e.dataTransfer.files;
+                  
+                  var reader = new FileReader();
+                
+                  reader.onload = function (e) {
+                    target.src = e.target.result;
+                  }
+                  reader.readAsDataURL(e.dataTransfer.files[0]);
+
+                });
+        </script>
+        <script>
+            var fileArea = document.getElementById('drag-drop-area');
+            var fileInput = document.getElementById('images');
+            fileArea.addEventListener('dragover', function(evt){
+              evt.preventDefault();
+              fileArea.classList.add('dragover');
+            });
+            fileArea.addEventListener('dragleave', function(evt){
+                evt.preventDefault();
+                fileArea.classList.remove('dragover');
+            });
+            fileArea.addEventListener('drop', function(evt){
+                evt.preventDefault();
+                fileArea.classList.remove('dragenter');
+                var files = evt.dataTransfer.files;
+                console.log("DRAG & DROP");
+                console.table(files);
+                fileInput.files = files;
+                photoPreview('onChenge',files[0]);
+            });
+            function photoPreview(event, f = null) {
+              var file = f;
+              if(file === null){
+                  file = event.target.files[0];
+              }
+              var reader = new FileReader();
+              var preview = document.getElementById("preview-area");
+              var previewImage = document.getElementById("previewImage");
+            
+              if(previewImage != null) {
+                preview.removeChild(previewImage);
+              }
+              reader.onload = function(event) {
+                var img = document.createElement("img");
+                img.setAttribute("src", reader.result);
+                img.setAttribute("id", "previewImage");
+                preview.appendChild(img);
+              };
+            
+              reader.readAsDataURL(file);
+            }
         </script>
     </body>
 </html>

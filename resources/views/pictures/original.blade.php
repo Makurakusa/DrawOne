@@ -2,13 +2,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <title>DrawOne</title>
-        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+1:wght@100..900&family=Murecho:wght@100..900&family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/css/drawone.css" >
+        <title>Pictures</title>
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     </head>
     <body>
         <div class="header">
@@ -26,20 +28,9 @@
             </div>
         </div>
         <div class="middle">
-            <h1 class = "title">編集画面</h1>
-            <div class = "content">
-                <form action="/pictures/{{ $picture->id }}" class="form" method="POST">
-                    @csrf
-                    @method('PUT')
-                    <div class = "content_title">
-                        <h2>タイトル</h2>
-                        <input type="text" name="picture[title]" value="{{ $picture->title }}" class="input" placeholder="タイトルを入力してください"/>
-                        <p class="title__error" style="color:red">{{ $errors->first('picture.title') }}</p>
-                    </div>
-                    <button type="submit" class="button">保存</button>
-                </form>
-            </div>
+            <p class = "text">オリジナル画質表示</p>
         </div>
+        <img src="{{ asset($picture->path) }}">
         <div class="footer">
             <div class ="button-back">
                 <a href = "/pictures/{{ $picture->id }}" class="back">戻る</a>

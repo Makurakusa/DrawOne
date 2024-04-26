@@ -11,13 +11,13 @@ class Picture extends Model
 {
     use SoftDeletes;
     use HasFactory;
-    public function getPaginateByLimit(int $limit_count = 2)
+    public function getPaginateByLimit(int $limit_count = 5)
     {
         // created_atで降順に並べたあと、limitで件数制限をかける
         return $this::with('theme')->orderBy('created_at', 'DESC')->paginate($limit_count);
     }
     
-    public function getOrderByLikes(int $limit_count = 2)
+    public function getOrderByLikes(int $limit_count = 5)
     {
         return $this::withCount('likes')->orderBy('likes_count', 'DESC')->paginate($limit_count);
     }
