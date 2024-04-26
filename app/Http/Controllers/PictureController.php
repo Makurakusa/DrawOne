@@ -8,6 +8,8 @@ use App\Http\Requests\PictureRequest;
 use App\Http\Requests\PictureUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Picture;
 use App\Models\Theme;
 use App\Models\Like;
@@ -47,6 +49,12 @@ class PictureController extends Controller
         return view('pictures.create') -> with(['theme' => $theme ->where('id', $id)->first()]);
     }
     
+    public function extend(Request $request, Theme $theme)
+    {
+        $id=$request->id;
+        return view('pictures.extend') -> with(['theme' => $theme ->where('id', $id)->first()]);
+    }
+    
     public function edit(Picture $picture)
     {
         return view('pictures.edit')->with(['picture' => $picture]);
@@ -62,18 +70,85 @@ class PictureController extends Controller
     
     public function store(Picture $picture, PictureRequest $request)
     {
+         if (Storage::missing('public/resized')) {
+            Storage::makeDirectory('public/resized');
+          }
+         if (Storage::missing('public/thumb')) {
+            Storage::makeDirectory('public/thumb');
+          }
+        
         $dir = 'storage';
+        $thumbDir = 'thumb';
+        $resizedDir = 'resized';
+        
         $file = $request -> file('picture.image');
         $file_name = $file -> hashName();
         $user_id = Auth::id();
+        
+        $PubThumbPath = 'storage/' . $thumbDir . '/' . $file_name;
+        $PubResizedPath = 'storage/' . $resizedDir . '/' . $file_name;
+        
+        $thumbPath = public_path($PubThumbPath);
+        $resizedPath = public_path($PubResizedPath);
+        
+        $thumb = \Image::make($file)->fit(300, 300);
+        $resized = \Image::make($file)->resize(1080,null,function($constraint){$constraint->aspectRatio();});
         //getClientOriginalNameでオリジナルの名前が取れる。
-        $request->file('picture.image')->storeAs('public/'.$dir, $file_name); 
+        $file = $request->file('picture.image')->storeAs('public/'.$dir, $file_name); 
         //storeAsメソッドを追加して引数に上で取得したオリジナル名を入れる。
+        $thumb -> save($thumbPath);
+        $resized -> save($resizedPath); 
+        
         $picture = new Picture();
         $picture -> title = $request['picture.title'];
         $picture -> theme_id = $request['picture.theme_id'];
         $picture -> user_id = $user_id;
         $picture -> path = 'storage/' . $dir . '/' . $file_name;
+        $picture -> thumb_path = $PubThumbPath;
+        $picture -> resized_path = $PubResizedPath;
+        $picture->save();
+        return redirect('/pictures/' . $picture->id);
+    }
+    
+    public function storeExtend(Picture $picture, PictureRequest $request)
+    {
+        if (Storage::missing('public/resized')) {
+            Storage::makeDirectory('public/resized');
+          }
+         if (Storage::missing('public/thumb')) {
+            Storage::makeDirectory('public/thumb');
+          }
+        
+        $dir = 'storage';
+        $thumbDir = 'thumb';
+        $resizedDir = 'resized';
+        
+        $file = $request -> file('picture.image');
+        $file_name = $file -> hashName();
+        $user_id = Auth::id();
+        
+        $PubThumbPath = 'storage/' . $thumbDir . '/' . $file_name;
+        $PubResizedPath = 'storage/' . $resizedDir . '/' . $file_name;
+        
+        $thumbPath = public_path($PubThumbPath);
+        $resizedPath = public_path($PubResizedPath);
+        
+        $thumb = \Image::make($file)->fit(300, 300);
+        $resized = \Image::make($file)->resize(1080,null,function($constraint){$constraint->aspectRatio();});
+        //getClientOriginalNameでオリジナルの名前が取れる。
+        $file = $request->file('picture.image')->storeAs('public/'.$dir, $file_name); 
+        //storeAsメソッドを追加して引数に上で取得したオリジナル名を入れる。
+        $thumb -> save($thumbPath);
+        $resized -> save($resizedPath); 
+        
+        $picture = new Picture();
+        $picture -> title = $request['picture.title'];
+        $picture -> theme_id = $request['picture.theme_id'];
+        $picture -> user_id = $user_id;
+        $picture -> is_extended = true;
+        $picture -> path = 'storage/' . $dir . '/' . $file_name;
+        $picture -> thumb_path = 'storage/' . $thumbDir . '/' . $file_name;
+        $picture -> resized_path = 'storage/' . $resizedDir . '/' . $file_name;
         $picture->save();
         return redirect('/pictures/' . $picture->id);
     }
@@ -110,6 +185,10 @@ class PictureController extends Controller
         return redirect()->back();
     }
     
+    public function original(Picture $picture){
+        return view('pictures.original')->with(['picture' => $picture]);
+    }
+    
     public function search(Request $request)
     {
         $keyword = $request->input('keyword');
@@ -138,7 +217,11 @@ class PictureController extends Controller
                     $query->where(function($subQuery) use ($value) {
                         $subQuery->whereHas('user', function ($q) use ($value) {
                             $q->where('name', 'LIKE', "%{$value}%");
-                        })->orWhere('title', 'LIKE', "%{$value}%");
+                        })->orWhere(function($subQuery2) use ($value){
+                            $subQuery2->whereHas('theme',function($q2) use ($value) {
+                                $q2->where('title', 'LIKE', "%{$value}%");
+                            })->orWhere('title', 'LIKE', "%{$value}%");
+                        });
                     });
     }
 });
@@ -146,7 +229,7 @@ class PictureController extends Controller
             
         }
         
-        $result = $query -> paginate(2);
+        $result = $query -> paginate(20);
 
         return view('pictures.search')->with(['pictures' => $result, 'keyword' => $keyword]);
     }

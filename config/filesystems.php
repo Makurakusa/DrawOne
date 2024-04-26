@@ -43,6 +43,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        
+        // 'thumb' => [
+        //     'driver' => 'local',
+        //     'root' => storage_path('app/public/_thumbs'),
+        //     'url' => '/storage/_thumbs',
+        //     'visibility' => 'public',
+        // ],
 
         's3' => [
             'driver' => 's3',

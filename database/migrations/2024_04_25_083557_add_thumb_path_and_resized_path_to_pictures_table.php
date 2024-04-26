@@ -13,8 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('replies', function (Blueprint $table) {
-            //
+        Schema::table('pictures', function (Blueprint $table) {
+            $table->string('resized_path', 100);
+            $table->string('thumb_path', 100);
         });
     }
 
@@ -25,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('replies', function (Blueprint $table) {
+        Schema::table('pictures', function (Blueprint $table) {
             //
         });
     }
