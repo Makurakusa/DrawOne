@@ -12,5 +12,4 @@ class UserController extends Controller
     {
         return view('users.index')->with(['user' => $user, 'pictures' => $user->getByUser()]);
     }
-
 }

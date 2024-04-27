@@ -14,6 +14,7 @@
             <a href = "/" class = "drawone"><img src = "{{ asset('drawone_logo.png') }}" alt = "" ></a>
         </div>
         <div class="middle">
+            <h2 class="hedding">お題入力</h2>
             <form action="/themes" class="form" method="POST">
                 @csrf
                 <div class = "theme">
@@ -22,6 +23,7 @@
                 </div>
                 <button type="submit" class="button">保存</button>
             </form>
+            <p>※最大50文字まで</p>
         </div>
         <div class = "footer">
             <div class ="button-back">

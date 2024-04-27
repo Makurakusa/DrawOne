@@ -26,18 +26,19 @@
             </div>
         </div>
         <div class="middle">
-            <h1 class = "title">編集画面</h1>
+            <h2 class = "title-edit">タイトル編集画面</h1>
             <div class = "content">
                 <form action="/pictures/{{ $picture->id }}" class="form" method="POST">
                     @csrf
                     @method('PUT')
                     <div class = "content_title">
-                        <h2>タイトル</h2>
+                        <p>タイトル</p>
                         <input type="text" name="picture[title]" value="{{ $picture->title }}" class="input" placeholder="タイトルを入力してください"/>
                         <p class="title__error" style="color:red">{{ $errors->first('picture.title') }}</p>
                     </div>
                     <button type="submit" class="button">保存</button>
                 </form>
+                <p>※最大50文字まで</p>
             </div>
         </div>
         <div class="footer">

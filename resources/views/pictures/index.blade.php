@@ -34,17 +34,24 @@
                 <div class='pictures'>
                     <div class='picture'>
                         <a href = "/pictures/{{ $picture->id }}"><img src="{{$picture->thumb_path}}" alt=""></a>
-                        <h2 class='title'>
-                            <a href = "/pictures/{{ $picture->id }}">{{ $picture->title }}@if($picture->is_extended == true)<span style = "color:#888888;">（延長）</span>@endif</a>
-                        </h2>
-                        <a href="/users/{{ $picture->user->id }}" class = "user">{{ $picture->user->name }}</a>
-                        <div class = "likes">
-                          @if($picture->is_liked_by_auth_user())
-                            <a href="/pictures/unlike?id={{$picture->id}}" class="btn btn-success btn-sm"><i class="fa-solid fa-heart"></i><span class="badge">{{ $picture->likes->count() }}</span></a>
-                          @else
-                            <a href="/pictures/like?id={{$picture->id}}" class="btn btn-secondary btn-sm"><i class="fa-regular fa-heart"></i><span class="badge">{{ $picture->likes->count() }}</span></a>
-                          @endif
+                        <div class="title-and-likes">
+                            <h2 class='title'>
+                                <div class="title">
+                                    <a href = "/pictures/{{ $picture->id }}">
+                                        <p class="index-letter">{{ $picture->title }}@if($picture->is_extended == true)
+                                        <span style = "color:#888888;">（延長）</span>@endif</p>
+                                    </a>
+                                </div>
+                            </h2>
+                            <div class = "likes">
+                              @if($picture->is_liked_by_auth_user())
+                                <a href="/pictures/unlike?id={{$picture->id}}" class="btn btn-success btn-sm"><i class="fa-solid fa-heart"></i> <span class="badge">{{ $picture->likes->count() }}</span></a>
+                              @else
+                                <a href="/pictures/like?id={{$picture->id}}" class="btn btn-secondary btn-sm"><i class="fa-regular fa-heart"></i> <span class="badge">{{ $picture->likes->count() }}</span></a>
+                              @endif
+                            </div>
                         </div>
+                        <a href="/users/{{ $picture->user->id }}"><p class="index-letter">{{ $picture->user->name }}</p></a>
                     </div>
                 </div>
             @endforeach
@@ -52,6 +59,13 @@
         <div class='paginate'>
             {{ $pictures->links('vendor.pagination.bootstrap-4') }}
         </div>
+        </div>
+        <div class="middle">
+            <h2 class="heading">ワンドロとは</h2>
+            <p>ワンドロとは1時間で絵を描くことです！</p>
+            <p>お題に沿ってやることが多く、SNSでは共通のお題でワンドロを行うイベントもあります。</p>
+            <p>本サイトはワンドロを行うことに特化した画像投稿SNSです。</p>
+            <a href="/explanation">このサイトの詳しい使い方はコチラ</a>
         </div>
         <div class ="footer">
             <div class = 'btn btn--draw'>
