@@ -14,8 +14,11 @@
         <div class="header">
             <a href = "/" class = "drawone"><img src = "{{ asset('drawone_logo.png') }}" alt = "" ></a>
         </div>
-        <div class="time">
-            <div id="timer">TIME IS UP!</div>
+        <div class="time-parent">
+            <p>残り時間</p>
+            <div class="time">
+                <div id="timer">00:00:00</div>
+            </div>
         </div>
         <div class="middle">
             <div class="theme">
@@ -38,12 +41,14 @@
                         <div id="preview-area"></div>
                     </div>
                 </div>
-                <div class = "title">
+                <div class = "title-create">
                     <input type="text" name="picture[title]" class="input" placeholder="タイトルを入力してください"/>
                     <p class="title__error" style="color:red">{{ $errors->first('picture.title') }}</p>
                 </div>
                 <button type="submit" class="button">保存</button>
             </form>
+            <p>※最大50文字まで</p>
+            <p>タイトルは投稿後にも変更できます！</p>
         </div>
         <div class = "footer">
             <div class ="button-back">

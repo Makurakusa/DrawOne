@@ -31,30 +31,30 @@
             <h2 class="heading">{{ $user->name }}の作品</h2>
             <div class="box-parent">
                 @foreach ($pictures as $picture)
-                    <div class='pictures'>
-                        <div class='picture'>
-                            <a class="thumb" href = "/pictures/{{ $picture->id }}"><img src="{{ asset($picture->thumb_path) }}"</a>
+                <div class='pictures'>
+                    <div class='picture'>
+                        <a href = "/pictures/{{ $picture->id }}"><img src="{{asset($picture->thumb_path)}}" alt=""></a>
+                        <div class="title-and-likes">
                             <h2 class='title'>
-                                <a href = "/pictures/{{ $picture->id }}">{{ $picture->title }}@if($picture->is_extended == true)<span style = "color:#888888;">（延長）</span>@endif</a>
+                                <div class="title">
+                                    <a href = "/pictures/{{ $picture->id }}">
+                                        <p class="index-letter">{{ $picture->title }}@if($picture->is_extended == true)
+                                        <span style = "color:#888888;">（延長）</span>@endif</p>
+                                    </a>
+                                </div>
                             </h2>
-                            <a href="/users/{{ $picture->user->id }}" class = "user">{{ $picture->user->name }}</a>
                             <div class = "likes">
                               @if($picture->is_liked_by_auth_user())
-                                <a href="/pictures/unlike?id={{$picture->id}}" class="btn btn-success btn-sm"><i class="fa-solid fa-heart"></i><span class="badge">{{ $picture->likes->count() }}</span></a>
+                                <a href="/pictures/unlike?id={{$picture->id}}" class="btn btn-success btn-sm"><i class="fa-solid fa-heart"></i> <span class="badge">{{ $picture->likes->count() }}</span></a>
                               @else
-                                <a href="/pictures/like?id={{$picture->id}}" class="btn btn-secondary btn-sm"><i class="fa-regular fa-heart"></i><span class="badge">{{ $picture->likes->count() }}</span></a>
+                                <a href="/pictures/like?id={{$picture->id}}" class="btn btn-secondary btn-sm"><i class="fa-regular fa-heart"></i> <span class="badge">{{ $picture->likes->count() }}</span></a>
                               @endif
                             </div>
-                            @if (Auth::user()->id == $picture->user_id)
-                                <form action="/pictures/{{ $picture->id }}" id="form_{{ $picture->id }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="button-delete" onclick="deletePicture({{ $picture->id }})">削除</button> 
-                                </form>
-                            @endif
                         </div>
-                    </div> 
-                @endforeach
+                        <p class="index-letter">お題：{{$picture->theme->title}}</p>
+                    </div>
+                </div>
+            @endforeach
             </div>
             <div class='paginate'>
                 {{ $pictures->links('vendor.pagination.bootstrap-4') }}

@@ -18,7 +18,7 @@
         </div>
         <div class="middle">
             <div class="theme">
-                <h2>あなたのお題は「{{ $theme -> title }}」です！</h2>
+                <h2 class="hedding">あなたのお題は「{{ $theme -> title }}」です！</h2>
             </div>
             <div class = 'btn btn--draw'>
                 <a href='/pictures/create?id={{ $theme->id }}' class = "btn--draw--text">描く</a>

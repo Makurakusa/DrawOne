@@ -6,6 +6,7 @@ use App\Http\Controllers\PictureController;
 use App\Http\Controllers\ThemeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\EtcController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,6 +48,10 @@ Route::controller(CommentController::class)->middleware(['auth'])->group(functio
     Route::post('/pictures/{picture}', 'store')->name('comments.store');
     Route::delete('/pictures/{picture}/{comment}/{reply}', 'delete')->name('replies.delete');
     Route::delete('/pictures/{picture}/{comment}', 'destroy')->name('comments.delete');
+});
+
+Route::controller(EtcController::class)->middleware(['auth'])->group(function(){
+    Route::get('/explanation','explain')->name('explain');
 });
 
 Route::middleware('auth')->group(function () {

@@ -27,30 +27,45 @@
                 </div>
             </div>
         </div>
-        <div class="box-parent">
-            @foreach ($pictures as $picture)
-                <div class='pictures'>
-                    <div class='picture'>
-                        <a class="thumb" href = "/pictures/{{ $picture->id }}"><img src="{{asset($picture->thumb_path)}}" alt=""></a>
-                        <h2 class='title'>
-                            <a href = "/pictures/{{ $picture->id }}">{{ $picture->title }}@if($picture->is_extended == true)<span style = "color:#888888;">（延長）</span>@endif</a>
-                        </h2>
-                        <a href="/users/{{ $picture->user->id }}" class = "user">{{ $picture->user->name }}</a>
-                        <div class = "likes">
-                          @if($picture->is_liked_by_auth_user())
-                            <a href="/pictures/unlike?id={{$picture->id}}" class="btn btn-success btn-sm"><i class="fa-solid fa-heart"></i><span class="badge">{{ $picture->likes->count() }}</span></a>
-                          @else
-                            <a href="/pictures/like?id={{$picture->id}}" class="btn btn-secondary btn-sm"><i class="fa-regular fa-heart"></i><span class="badge">{{ $picture->likes->count() }}</span></a>
-                          @endif
+        <div class="middle">
+            <div class="result">
+                @if(isset( $keyword ))
+                <h2 class="hedding">{{$keyword}}の検索結果</h2>
+                <p id="result-counts"><span>{{ $pictures->count() }}</span>件</p>
+                <p></p>
+                @endif
+            </div>
+            <div class="box-parent">
+                @foreach ($pictures as $picture)
+                    <div class='pictures'>
+                        <div class='picture'>
+                            <a class="thumb" href = "/pictures/{{ $picture->id }}"><img src="{{asset($picture->thumb_path)}}" alt=""></a>
+                            <div class="title-and-likes">
+                                <h2 class='title'>
+                                    <div class="title-and-likes">
+                                        <a href = "/pictures/{{ $picture->id }}">
+                                            <p class="index-letter">{{ $picture->title }}@if($picture->is_extended == true)
+                                            <span style = "color:#888888;">（延長）</span>@endif</p>
+                                        </a>
+                                    </div>
+                                </h2>
+                                <div class = "likes">
+                                  @if($picture->is_liked_by_auth_user())
+                                    <a href="/pictures/unlike?id={{$picture->id}}" class="btn btn-success btn-sm"><i class="fa-solid fa-heart"></i><span class="badge">{{ $picture->likes->count() }}</span></a>
+                                  @else
+                                    <a href="/pictures/like?id={{$picture->id}}" class="btn btn-secondary btn-sm"><i class="fa-regular fa-heart"></i><span class="badge">{{ $picture->likes->count() }}</span></a>
+                                  @endif
+                                </div>
+                            </div>
+                            <a href="/users/{{ $picture->user->id }}"><p class="index-letter">{{ $picture->user->name }}</p></a>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
+            <div class='paginate'>
+                {{ $pictures->appends(request()->input())->links() }}
+            </div>
         </div>
-        <div class='paginate'>
-            {{ $pictures->appends(request()->input())->links() }}
-        </div>
-        
         <div class = "footer">
             <div class = 'btn btn--draw'>
                 <a href='/themes/create' class = "btn--draw--text">ワンドロする！</a>

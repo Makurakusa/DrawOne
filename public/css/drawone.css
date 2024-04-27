@@ -46,15 +46,25 @@ input, select, button, textarea {
     margin:20px 60px;
 }
 
+.heading{
+    margin-bottom:20px;
+}
+
 .headbox{
     display: flex;
     justify-content: space-between;
 }
 
+.flex{
+    display: flex;
+    align-items: flex-end;
+}
+
 /*画像リスト表示*/
 .pictures{
-    display: flex; 
+    width:310px;
     height:auto;
+    margin-bottom:10px;
 }
 
 .box-parent {
@@ -64,10 +74,6 @@ input, select, button, textarea {
   justify-content:flex-start;
 }
 
-.picture{
-    margin-right : 10px ;
-}
-
 /*ペジネーション*/
 .paginate{
     display: flex;
@@ -75,13 +81,14 @@ input, select, button, textarea {
 
 /* ページ送りを中央寄せ */
 .pagination {
-    font-size:20px;
+    font-size:24px;
     text-align: center;
 }
 
 /* ページ送りを横並びに */
 .pagination li{
     display: inline-block;
+    margin-right:40px;
 }
 
 /*検索ボックス*/
@@ -130,6 +137,16 @@ input, select, button, textarea {
     background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%20%3Cpath%20d%3D%22M23.7%2020.8%2019%2016.1c-.2-.2-.5-.3-.8-.3h-.8c1.3-1.7%202-3.7%202-6C19.5%204.4%2015.1%200%209.7%200S0%204.4%200%209.7s4.4%209.7%209.7%209.7c2.3%200%204.3-.8%206-2v.8c0%20.3.1.6.3.8l4.7%204.7c.4.4%201.2.4%201.6%200l1.3-1.3c.5-.5.5-1.2.1-1.6zm-14-5.1c-3.3%200-6-2.7-6-6s2.7-6%206-6%206%202.7%206%206-2.6%206-6%206z%22%20fill%3D%22%23777777%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E');
     background-repeat: no-repeat;
     content: '';
+}
+.result{
+    display:flex;
+    align-items: flex-end;
+}
+#result-counts{
+    text-align:left;
+    margin-bottom:20px;
+    margin-left:20px;
+    font-size:24px;
 }
 
 /*ワンドロボタン*/
@@ -207,6 +224,7 @@ input, select, button, textarea {
 
 .input {
     width:400px;
+    margin-left:10px;
     height: 45px;
     padding: 5px 15px;
     border: none;
@@ -263,8 +281,11 @@ input, select, button, textarea {
     max-width:600px;
     max-height:600px;
 }
-.drag-drop-buttons input{
+#drag-drop-area .drag-drop-buttons input{
     margin: auto;
+}
+#drag-drop-area .file-introduction{
+    font-size:12px;
 }
 
 /*戻るボタン*/
@@ -294,12 +315,145 @@ input, select, button, textarea {
 .image img{
     width: 100%;
 }
+.theme-title {
+    font-size:20px;
+}
+.created-at {
+    color:#878787;
+}
+.likes {
+    font-size: 20px;
+}
+.buttons{
+    display:flex;
+    justify-content:flex-end;
+}
+#replies{
+    margin-left:40px;
+}
+.display-reply-form{
+    position:relative;
+    bottom:16px;
+}
+.display-reply-form li {
+    height: 0;
+    overflow: hidden;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    transition: all 0.5s;
+}
+#change{
+    width: 16px;
+    height: 16px;
+}
+#change:checked ~ #reply-form li {
+    height: 120px;cursor :pointer;
+}
+.comment-unit{
+    max-width:900px;
+    padding:10px 20px;
+    background-color: #F2F0F2;
+    margin-bottom:20px;
+    border-radius: 1vh;
+}
+.comment-body{
+    margin-top:10px;
+    margin-left:20px;
+    max-width:800px;
+}
+.reply-body{
+    margin-top:10px;
+    margin-left:20px;
+    max-width:760px;
+}
+.comment-area {
+    padding:20px 20px;
+}
+.comment-box {
+    max-width:900px;
+    display:flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+/*create.blade.php*/
+.time-parent{
+    background-color:#FFFFFF;
+    margin:20px 60px;
+    padding:20px;
+}
 
 .time {
     font-size:40px;
     text-align: center;
     font-family: "Murecho", sans-serif;
-    margin:20px 60px;
-    padding:20px;
-    background-color:#FFFFFF;
+}
+
+/*index.blade.php*/
+.title {
+    margin-bottom:0px;
+    padding:0px;
+}
+.index-letter {
+    font-size:16px;
+    margin:0;
+    flex-shrink: 0;
+    width:250px;
+    white-space: nowrap; /* 横幅のMAXに達しても改行しない */
+    overflow: hidden; /* ハミ出した部分を隠す */
+    text-overflow: ellipsis; /* 「…」と省略 */
+    -webkit-text-overflow: ellipsis; /* Safari */
+    -o-text-overflow: ellipsis; /* Opera */
+}
+.title-and-likes {
+    display:flex;
+    justify-content: space-between;
+}
+.title-and-likes .likes {
+    margin-right:10px;
+}
+
+/*explanation.blade.php*/
+.flow{
+  padding: 10px;
+  border: #ddd dashed 5px;
+  margin:20px 0px;
+}
+.flow-child{
+    margin-bottom:1%;
+    margin-left:1%;
+}
+.form-sample{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px; /* 任意の幅に調整してください */
+    overflow: hidden;
+    border-radius: 25px;
+    background-color: #f2f2f2;
+    margin:20px;
+}
+.form-sample-input {
+    height: 20px;
+    padding: 5px 15px;
+    border: none;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    font-size: 1em;
+    outline: none;
+}
+.form-sample-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 20px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;charset=utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%20%3Cpath%20d%3D%22M23.7%2020.8%2019%2016.1c-.2-.2-.5-.3-.8-.3h-.8c1.3-1.7%202-3.7%202-6C19.5%204.4%2015.1%200%209.7%200S0%204.4%200%209.7s4.4%209.7%209.7%209.7c2.3%200%204.3-.8%206-2v.8c0%20.3.1.6.3.8l4.7%204.7c.4.4%201.2.4%201.6%200l1.3-1.3c.5-.5.5-1.2.1-1.6zm-14-5.1c-3.3%200-6-2.7-6-6s2.7-6%206-6%206%202.7%206%206-2.6%206-6%206z%22%20fill%3D%22%23777777%22%3E%3C%2Fpath%3E%20%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    content: '';
 }
